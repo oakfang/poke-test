@@ -23,7 +23,7 @@ liveChat.on("chat", async ({ message }) => {
     .filter(Boolean)
     .join(" ");
   if (!text) return;
-  const pokemonInMessage = text
+  const pokemonInMessage = text.toLowerCase()
     .split(/\s+/)
     .map((word, idx, words) =>
       POKEMON_SET.has(word)
