@@ -1,0 +1,17 @@
+{
+  "name": "poke-test",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "playwright": "^1.43.1",
+    "youtube-chat": "^2.2.0"
+  }
+}
