@@ -6,7 +6,7 @@ import pokemon from "./pokemon.json" assert { type: "json" };
 const QUIZ_URL = "https://pkmnquiz.com/";
 const CHAT_ID = "9TMslV0kvcM";
 const POKEMON_REGEXP = new RegExp(
-  `(${pokemon.join("|").replace(/\./g, "\\.")})`,
+  `(${pokemon.reverse().join("|").replace(/\./g, "\\.")})`,
   "ig"
 );
 
