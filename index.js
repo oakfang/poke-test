@@ -5,10 +5,7 @@ import pokemon from "./pokemon.json" assert { type: "json" };
 
 const QUIZ_URL = "https://pkmnquiz.com/";
 const CHAT_ID = "9TMslV0kvcM";
-const POKEMON_REGEXP = new RegExp(
-  `(${pokemon.reverse().join("|").replace(/\./g, "\\.")})`,
-  "ig"
-);
+const POKEMON_SET = new Set(pokemon.map((p) => p.toLowerCase()));
 
 const liveChat = new LiveChat({ liveId: CHAT_ID });
 const browser = await chromium.launch({ headless: false });
@@ -26,12 +23,19 @@ liveChat.on("chat", async ({ message }) => {
     .filter(Boolean)
     .join(" ");
   if (!text) return;
-  const pokemonInMessage = text.match(POKEMON_REGEXP);
-  if (pokemonInMessage) {
-    for (let name of pokemonInMessage) {
-      await pokemonInput.fill(name);
-      await pokemonInput.press("Enter");
-    }
+  const pokemonInMessage = text
+    .split(/\s+/)
+    .map((word, idx, words) =>
+      POKEMON_SET.has(word)
+        ? word
+        : POKEMON_SET.has(word + " " + words[idx + 1])
+        ? word + " " + words[idx + 1]
+        : null
+    )
+    .filter(Boolean);
+  for (let name of pokemonInMessage) {
+    await pokemonInput.fill(name);
+    await pokemonInput.press("Enter");
   }
 });
 
